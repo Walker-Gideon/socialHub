@@ -1,10 +1,24 @@
+import { 
+  Route, 
+  Routes, 
+  Navigate, 
+  BrowserRouter, 
+} from "react-router-dom";
+
+import HomePage from "./pages/home/index.tsx";
+import ProfilePage from "./pages/profile/index.tsx";
+
+
 export default function App() {
   return (
     <>
-      <div>
-        <h1>Social Hub</h1>
-        <p>Social Media for Everyone</p>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Navigate replace to="/home" />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/profile/:username" element={<ProfilePage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
-} 
+}
