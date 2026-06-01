@@ -20,13 +20,13 @@ export default function ProfileDisplay({
     username,
     displayName,
 }: ProfileDisplayProps) {
-    const [copied, setCopied] = useState(false)
+    const [copied, setCopied] = useState(false);
 
     const copyToClipboard = () => {
-        const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/profile/${username}`
-        navigator.clipboard.writeText(url)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 2000)
+        const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/profile/${username}`;
+        navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     }
 
     return (
@@ -93,7 +93,7 @@ export default function ProfileDisplay({
                     </div>
                 )}
 
-                {/* Footer */}
+                {/* Footer in the link url I need to put the deployed link there so that user can create theirs */}
                 <div className={"text-center mt-12 pt-8 border-t border-border"}>
                     <p className={"text-sm text-muted-foreground"}>
                         Made with SocialHub • <Link to="/">
