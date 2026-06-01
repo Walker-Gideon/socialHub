@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import Loader from '../../component/ui/Loader'
 import ProfileDisplay from './components/ProfileDisplay'
-import type { SocialLink } from '../../component/ui/SocialLinkButton'
+
+import { decodeFromHash } from '../../utils/encode'
+import type { ProfileData } from '../../utils/encode'
 
 export default function ProfilePage() {
+  /*
   const params = useParams()
   const username = params.username as string
 
@@ -12,10 +16,17 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true)
   const [displayName, setDisplayName] = useState('')
   const [links, setLinks] = useState<SocialLink[]>([])
+  */
+
+  const { username } = useParams<{ username: string }>() 
+  const [profile, setProfile] = useState<ProfileData | null>(null)
+  const [isOwner, setIsOwner] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if(!username) return
     
+     /*
     const storageKey = `profile_${username}`
     const saved = localStorage.getItem(storageKey)
 
@@ -34,23 +45,38 @@ export default function ProfilePage() {
     }
 
     setIsLoading(false)
+    */
+
+    const hash = window.location.hash
+    const decoded = decodeFromHash(hash)
+
+    if (decoded && decoded.username === username) {
+      setProfile(decoded)
+      const ownerkey = sessionStorage.getItem('socialhub_owner')
+      setIsOwner(ownerkey === username)
+    } else {
+      setProfile({
+        username,
+        displayName: username,
+        bio: "",
+        links: []
+      })
+      setIsOwner(false)
+    }
+
+    setIsLoading(false)
   }, [username])
 
-  if(isLoading) {
-    return (
-       <main className="min-h-screen bg-gradient-to-br from-background to-card flex items-center justify-center">
-        <div className="text-foreground">Loading...</div>
-      </main>
-    )
-  }
+  if(isLoading) return <Loader />;
+  if (!profile) return null;
 
   return (
     <ProfileDisplay
-      username={username}
-      displayName={displayName}
-      bio={bio}
-      links={links}
-      isOwner={true}
+      username={profile.username}
+      displayName={profile.displayName}
+      bio={profile.bio}
+      links={profile.links}
+      isOwner={isOwner}
     />
   )
 }
