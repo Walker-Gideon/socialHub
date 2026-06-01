@@ -1,7 +1,6 @@
 import { 
   Route, 
-  Routes, 
-  Navigate, 
+  Routes,  
   BrowserRouter, 
 } from "react-router-dom";
 
@@ -14,8 +13,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Navigate replace to="/home" />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/profile/:username/edit" element={<EditProfilePage />} />
       </Routes>

@@ -8,16 +8,6 @@ import { decodeFromHash } from '../../utils/encode'
 import type { ProfileData } from '../../utils/encode'
 
 export default function ProfilePage() {
-  /*
-  const params = useParams()
-  const username = params.username as string
-
-  const [bio, setBio] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
-  const [displayName, setDisplayName] = useState('')
-  const [links, setLinks] = useState<SocialLink[]>([])
-  */
-
   const { username } = useParams<{ username: string }>() 
   const [profile, setProfile] = useState<ProfileData | null>(null)
   const [isOwner, setIsOwner] = useState(false)
@@ -26,27 +16,6 @@ export default function ProfilePage() {
   useEffect(() => {
     if(!username) return
     
-     /*
-    const storageKey = `profile_${username}`
-    const saved = localStorage.getItem(storageKey)
-
-    if(saved) {
-      try {
-        const data = JSON.parse(saved)
-        setDisplayName(data.displayName || username)
-        setBio(data.bio || "")
-        setLinks(data.links || [])
-      } catch(error) {
-        console.error('Error loading profile:', error)
-        setDisplayName(username)
-      }
-    } else {
-      setDisplayName(username)
-    }
-
-    setIsLoading(false)
-    */
-
     const hash = window.location.hash
     const decoded = decodeFromHash(hash)
 

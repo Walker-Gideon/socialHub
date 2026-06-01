@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 
 const FEATURES = [
@@ -21,7 +21,13 @@ const FEATURES = [
 ]
 
 export default function HomePage() {
+    const navigate = useNavigate()
     const [username, setUsername] = useState("");
+
+    const handleStart = () => {
+        if (!username.trim()) return
+        navigate(`/profile/${username}/edit`)
+    }
 
     return (
       <main className={"min-h-screen bg-gradient-to-br from-background to-card flex items-center justify-center px-6 py-12 overflow-hidden"}>
@@ -55,7 +61,16 @@ export default function HomePage() {
                   onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/\s+/g, ''))}
                   className={"flex-1 px-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"}
                 />
-                <Link
+                <button
+                  onClick={handleStart}
+                  disabled={!username.trim()}
+                  className="px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all whitespace-nowrap bg-primary text-primary-foreground hover:opacity-90 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
+                >
+                  Get Started
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+                {/* <Link
                   to={username ? `/profile/${username}` : '#'}
                   onClick={(e) => {
                     if (!username) {
@@ -70,7 +85,7 @@ export default function HomePage() {
                 >
                   Get Started
                   <ArrowRight className={"w-4 h-4"} />
-                </Link>
+                </Link> */}
               </div>
               <p className={"text-xs text-muted-foreground"}>
                 No sign up required. Create your profile instantly.
